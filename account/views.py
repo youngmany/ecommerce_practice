@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from .forms import LoginForm, RegisterForm
 
+
 def index(request):
     return render(request, 'index.html', { 'email': request.session.get('user') })
 
@@ -13,7 +14,7 @@ def index(request):
 class RegisterView(FormView):
     template_name = 'register.html'
     form_class = RegisterForm
-    success_url = '/account'
+    success_url = '/'
     # success_url = 'account' # /account/account
     # success_url = '/' # /
 
@@ -36,7 +37,7 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             request.session['user'] = form.data.get('email')
-            return redirect('/account')
+            return redirect('/')
     else:
         form = LoginForm()
 
@@ -47,4 +48,4 @@ def logout(request):
     if 'user' in request.session:
         del(request.session['user'])
 
-    return redirect('/account')
+    return redirect('/')
