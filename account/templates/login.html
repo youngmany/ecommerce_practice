@@ -1,62 +1,29 @@
 {% extends "base.html" %}
 
 {% block contents %}
-<div class="container">
-    <header>
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Library</a></li>
-                    <li class="active">Data</li>
-                </ol>
+{% include "nav.html" %}
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <h1>로그인</h1>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <form method="POST"> <!--action="."-->
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                placeholder="{{ field.label }}" name="{{ field.name }}" />
             </div>
-        </nav>
-    </header>
-    
-    <!--
-    <div class="row mt-5">
-        <div class="col-12 text-center">
-            <nav class="navbar">
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a href="#">Home</a></li>
-                    <li role="presentation"><a href="#">Profile</a></li>
-                    <li role="presentation"><a href="#">Messages</a></li>
-                </ul>
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a href="#">Home</a></li>
-                    <li role="presentation"><a href="#">Profile</a></li>
-                    <li role="presentation"><a href="#">Messages</a></li>
-                </ul>
-            </nav class="nav">
-        </div>
-    </div>
-
-    <div class="row mt-5">
-        <div class="col-12">
-            {{ error }}
-            <h1>로그인</h1>
-        </div>
-    </div>
-    -->
-
-    <div class="row mt-5">
-        <div class="col-12">
-            <form method="POST"> <!--action="."-->
-                {% csrf_token %}
-                {% for field in form %}
-                <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
-                    placeholder="{{ field.label }}" name="{{ field.name }}" />
-                </div>
-                {% if field.errors %}
-                <span style="color: red">{{ field.errors }}</span>
-                {% endif %}
-                {% endfor %}
-                <button type="submit" class="btn btn-primary">로그인</button>
-            </form>
-        </div>
+            {% if field.errors %}
+            <span style="color: red">{{ field.errors }}</span>
+            {% endif %}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </form>
     </div>
 </div>
 {% endblock %}
