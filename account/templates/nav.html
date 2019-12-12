@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <!-- 메뉴의 홈페이지 이름 -->
-    <a class="navbar-brand" href="#">ECOMMERCE</a>
+    <a class="navbar-brand" href="{% url 'index' %}">ECOMMERCE</a>
     
     <!-- 모바일때 표시되는 메뉴 버튼(PC 버젼에서는 보이지 않는다.) -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,10 +10,11 @@
     <!-- 메인 메뉴 아이템 -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-        <!-- Home 메뉴 -->
+            <!-- Home 메뉴
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
+            -->
 
             <!-- Link 메뉴
             <li class="nav-item">
@@ -45,12 +46,21 @@
 
         <!-- 로그인 로그아웃 -->
         <ul class="navbar-nav">
+            {% if user %}
             <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Register</a>
+                <a class="nav-link" href="#">My Page</a>
             </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

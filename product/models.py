@@ -1,11 +1,24 @@
 from django.db import models
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=256, verbose_name='카테고리')
+
+    class Meta:
+        db_table = 'ecom_category'
+        verbose_name = '카테고리'
+        verbose_name_plural = '카테고리'
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=256, verbose_name='상품명')
     price = models.IntegerField(verbose_name='상품가격')
     description = models.TextField(verbose_name='상품설명')
     stock = models.IntegerField(verbose_name='재고')
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
     register_date = models.DateTimeField(auto_now_add=True, verbose_name='등록날짜')
 
     class Meta:

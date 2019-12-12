@@ -10,7 +10,13 @@
 
 <div class="row mt-5">
     <div class="col-12">
-        <form method="POST"> <!--action="."-->
+        {{ error }}
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             {% for field in form %}
             <div class="form-group">
@@ -22,7 +28,7 @@
             <span style="color: red">{{ field.errors }}</span>
             {% endif %}
             {% endfor %}
-            <button type="submit" class="btn btn-primary">로그인</button>
+            <button type="submit" class="btn btn-primary" style="float: right;">로그인</button>
         </form>
     </div>
 </div>

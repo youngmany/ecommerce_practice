@@ -1,7 +1,7 @@
 from django import forms
-from django.contrib.auth.hashers import check_password
-# from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
+
 
 class RegisterForm(forms.Form):
     email = forms.EmailField(
@@ -58,7 +58,6 @@ class LoginForm(forms.Form):
         if email and password:
             try:
                 User = get_user_model()
-                print(User)
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
                 self.add_error('email', '아이디가 존재하지 않습니다.')
