@@ -1,12 +1,12 @@
 import string
 import random
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from .forms import LoginForm, RegisterForm
+from product.models import Product
 
 
 class Index(View):
@@ -14,7 +14,8 @@ class Index(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name, {
-            'user': request.session.get('user')
+            'user': request.session.get('user'),
+            'product_list': Product.objects.all()
             })
 
 
@@ -24,7 +25,6 @@ class RegisterView(FormView):
     success_url = '/'
 
     def form_valid(self, form):
-        # 유효성 검사 종료 시 호출 함수
         user = User(
             # username으로 변경하거나, AbstractUser 상속하여 따로 정의 OR onetoone으로 계정 내용을 더 추가하여 모델링
             username = random.choice(string.ascii_uppercase),
@@ -41,7 +41,6 @@ class LoginView(FormView):
     form_class = LoginForm
     success_url = '/'
 
-    # 로그인이 정상적으로 실행되면 실행되는 함수
     def form_valid(self, form):
         self.request.session['user'] = form.data.get('email')
   
@@ -51,6 +50,6 @@ class LoginView(FormView):
 def logout(request):
     if 'user' in request.session:
         del request.session['user']
-        # request.session.modified = True
+        request.session.modified = True
 
     return redirect('/')
