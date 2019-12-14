@@ -1,47 +1,11 @@
 {% extends "base.html" %}
-{% load humanize %}
 
 {% block contents %}
 {% include "nav.html" %}
-
 <div class="col-sm-8 col-md-9">
-        <div class="page-header action">
-            <h1>{{ product_list.0.category }}</h1>
-        </div>
-        <!--
-         <div id="messages">
-        </div>
-        -->
-    
-        <!--
-        <form method="get" class="form-horizontal">
-            <input type="hidden" name="q" value="">
-            <strong>198</strong> 상품 - <strong>1</strong> 부터 <strong>20</strong> 까지.   
-        </form>
-        -->
-        <section>
-            <div>
-                <ol class="row">
-                    {% for product in product_list %}
-                    <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                        <article class="product_pod">
-                            <!--
-                            <div class="image_container">
-                                <a href="#">
-                                <img src="" alt="" class="thumbnail">
-                                </a>
-                            </div>
-                            -->
-                            <h3><a href="/product/{{ product.id }}" title="The shellcoder's handbook">{{ product }}</a></h3>
-                            <div class="product_price">
-                                <p class="price_color">{{ product.price|intcomma }} 원</p>
-                            </div>
-                        </article>
-                    </li>
-                    {% endfor %}
-                </ol>
-            </div>
-         </section>
-         
+    <div class="page-header action">
+        <h1>{{ product_list.0.category }}</h1>
+    </div>
+    {% include "product_list.html" %}
 </div>
 {% endblock %}

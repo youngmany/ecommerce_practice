@@ -16,7 +16,7 @@ class Index(View):
         return render(request, self.template_name, {
             'user': request.session.get('user'),
             'product_list': Product.objects.all()
-            })
+        })
 
 
 class RegisterView(FormView):
