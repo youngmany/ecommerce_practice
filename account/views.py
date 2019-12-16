@@ -1,5 +1,3 @@
-import string
-import random
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.views.generic.edit import FormView
@@ -26,9 +24,7 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         user = User(
-            # username으로 변경하거나, AbstractUser 상속하여 따로 정의 OR onetoone으로 계정 내용을 더 추가하여 모델링
-            username = random.choice(string.ascii_uppercase),
-            email = form.data.get('email'),
+            username = form.data.get('username'),
             password=make_password(form.data.get('password')),
         )
         user.save()
@@ -42,7 +38,7 @@ class LoginView(FormView):
     success_url = '/'
 
     def form_valid(self, form):
-        self.request.session['user'] = form.data.get('email')
+        self.request.session['user'] = form.data.get('username')
   
         return super().form_valid(form)
 
