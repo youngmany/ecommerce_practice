@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 from account.views import Index
 
 urlpatterns = [
@@ -23,4 +24,11 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('product/', include('product.urls')),
     path('order/', include('order.urls')),
+    path('cart/', include('cart.urls')), 
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        path('debug/', include(debug_toolbar.urls)),
+    ]

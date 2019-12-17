@@ -12,7 +12,7 @@ class Index(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name, {
-            'user': request.session.get('user'),
+            # 'user': request.session.get('user'),
             'product_list': Product.objects.all()
         })
 

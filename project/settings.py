@@ -29,11 +29,14 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     # 3rd app
+    'debug_toolbar',
+    'carton',
 
     # app
     'account',
     'order',
     'product',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -44,7 +47,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'project.urls'
 
@@ -121,3 +128,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'auth.User'
+
+CART_PRODUCT_MODEL = 'product.models.Product'
