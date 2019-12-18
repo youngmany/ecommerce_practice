@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # 3rd app
     'debug_toolbar',
     'carton',
+    'sorl.thumbnail',
 
     # app
     'account',

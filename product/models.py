@@ -1,5 +1,5 @@
 from django.db import models
-
+from sorl.thumbnail import ImageField
 
 class Category(models.Model):
     name = models.CharField(max_length=256, verbose_name='카테고리')
