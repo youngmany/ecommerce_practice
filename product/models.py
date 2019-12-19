@@ -18,6 +18,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='상품가격')
     description = models.TextField(verbose_name='상품설명')
     stock = models.IntegerField(verbose_name='재고')
+    image = ImageField(upload_to='static')
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
     register_date = models.DateTimeField(auto_now_add=True, verbose_name='등록날짜')
 
