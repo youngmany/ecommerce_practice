@@ -12,6 +12,8 @@ def test_user_create():
     )
     assert obj
 
+    obj.save()
+
 def test_user_register_form():
     form = RegisterForm(
         data={
@@ -23,18 +25,7 @@ def test_user_register_form():
 
     assert form.is_valid()
 
-
-
-"""
-    form = LoginForm(
-        data={
-            'username': 'ymkim1',
-            'password': 123123,
-        }
-    )
-
-    assert form.is_valid()
-
+@pytest.mark.django_db
 def test_user_login_form():
     form = LoginForm(
         data={
@@ -44,4 +35,3 @@ def test_user_login_form():
     )
 
     assert form.is_valid()
-"""
