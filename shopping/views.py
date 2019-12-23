@@ -6,8 +6,8 @@ from product.models import Product
 
 def add(request):
     cart = Cart(request.session)
-    print(request.GET.get('test'))
-    print(request.GET.get('product_id'))
+    # print(request.GET.get('test'))
+    # print(request.GET.get('product_id'))
     product = Product.objects.get(id=int(request.GET.get('product_id')))
     cart.add(product, price=product.price)
     return HttpResponse("Added")

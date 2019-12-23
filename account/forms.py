@@ -59,9 +59,12 @@ class LoginForm(forms.Form):
             try:
                 User = get_user_model()
                 user = User.objects.get(username=username)
+                print('check username', user)
             except User.DoesNotExist:
                 self.add_error('username', '아이디가 존재하지 않습니다.')
                 return  
 
             if not check_password(password, user.password):
+                print('form', password, user.password)
+                print('form type', type(password), type(user.password))
                 self.add_error('password', '비밀번호가 틀렸습니다.')
