@@ -6,4 +6,5 @@ install:
 env:
   - DB=mysql
 script:
+  - python manage.py migrate
   - pytest --cov=.
