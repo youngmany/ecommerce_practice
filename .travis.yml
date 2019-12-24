@@ -1,10 +1,18 @@
 language: python
+
+service:
+- mysql
+
 python:
-  - "3.7"
-install:
-  - pip install -r requirements.txt
+- "3.7"
+
 env:
-  - DB=mysql
+- DB=mysql
+
+install:
+- pip install -r requirements.txt
+
+before_script:
+
 script:
-  - python manage.py migrate
-  - pytest --cov=.
+- pytest --cov=.
