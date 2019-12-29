@@ -49,3 +49,6 @@ def logout(request):
         request.session.modified = True
 
     return redirect('/')
+
+def mypage(request):
+    return render(request, 'mypage.html')

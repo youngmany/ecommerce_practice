@@ -4,6 +4,39 @@
 {% block contents %}
 {% include "nav.html" %}
 
+{% if not request.session.user %}
+<script type="text/javascript">
+    function button_click() {
+        alert("로그인 해야합니다.");
+    }
+</script>
+{% endif %}
+
+<script>
+    var test;
+    $(document).ready(function () {
+        var $cnts = $('.cnt');
+        $cnts.change(function () {
+            console.log($cnts.eq(0).val());
+            test = $cnts.eq(0).val();
+        });
+    });
+</script>
+
+<script>
+    function cart(id) {
+        $.ajax({
+            // url: "{% url 'shopping_add' %}?product_id=" + id,// + "&test=" + 2,
+            url: "{% url 'shopping_add' %}?product_id=" + id + "&test=" + test,
+            type: "get",
+            success:function(result){
+                $('#result').text(result['msg']);
+            }
+        });
+    }
+</script>
+
+
 <div class="row mt-5">
     <div class="col-12">
         <div class="card" style="width: 100%;">
@@ -12,6 +45,7 @@
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><img src="/{{ product.image }}" width="300" height="300"></li>
+            {% if product.stock %}
             <li class="list-group-item">
                 <form method="POST" action="/order/create">
                 {% csrf_token %}
@@ -20,7 +54,7 @@
                         {% ifnotequal field.name 'product' %}
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                         {% endifnotequal %}
-                        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                        <input type="{{ field.field.widget.input_type }}" class="cnt form-control" id="{{ field.id_for_label }}"
                         placeholder="{{ field.label }}" name="{{ field.name }}"
                         value="{% ifequal field.name 'product' %}{{product.id}}{% endifequal %}" />
                     </div>
@@ -28,10 +62,15 @@
                     <span style="color: red">{{ field.errors }}</span>
                     {% endif %}
                 {% endfor %}
-                <button type="submit" class="btn btn-primary">주문하기</button>
-                <a href="{% url 'shopping_add' %}?product_id={{product.id}}" class="btn btn-primary">장바구니</a>
+                <button type="submit" class="btn btn-primary" onclick="button_click();">주문하기</button>
+                <a id="test" class="btn btn-primary" onclick="cart( {{product.id}} );">
+                    장바구니
+                </a>
                 </form>
             </li>
+            {% else %}
+            <li class="list-group-item"><b>재고가 없습니다.</b></li>
+            {% endif %}
             <li class="list-group-item">가격: {{ product.price|intcomma }} 원</li>
             <li class="list-group-item">등록날짜: {{ product.register_date|date:'Y-m-d H:i' }}</li>
             <li class="list-group-item">재고: {{ product.stock|intcomma }} 개</li>

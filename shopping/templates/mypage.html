@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load carton_tags %}
+
+{% block contents %}
+{% include "nav.html" %}
+{% get_cart as cart %}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <table class="table table-light">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">상품명</th>
+                    <th scope="col">수량</th>
+                    <th scope="col">가격</th>
+                </tr>
+            </thead>
+            <tbody class="text-dark">
+                {% for item in cart.items %}
+                <tr>
+                    <th>{{ item.product.name }}</th>
+                    <th>{{ item.quantity }} 개</th>
+                    <th>{{ item.subtotal }}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
