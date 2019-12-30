@@ -1,31 +1,37 @@
 version: '3'
 
 services:
-  db:
+  mysql:
     image: mysql:5.7
-    volumes:
-      - ./docker/data:/var/lib/postgresql/data
+    hostname: mysql
+    container_name: mysql
+    command: --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    restart: always
+    ports:
+      - "3306:3306"
     environment:
-      - MYSQL_DATABASE: "ecom"
-      - MYSQL_USER: "root"
-      - MYSQL_PASSWORD: "gluesys!!"
-      - MYSQL_ROOT_PASSWORD: "gluesys!!"
+      MYSQL_ROOT_PASSWORD: gluesys!!
+      MYSQL_USER: ymkim
+      MYSQL_PASSWORD: gluesys!!
+      MYSQL_DATABASE: ecom
 
   django:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile-dev
+      dockerfile: Dockerfile
     environment:
       - DJANGO_DEBUG=True
       - DJANGO_DB_HOST=db
-      - DJANGO_DB_PORT=5432
-      - DJANGO_DB_NAME=sampledb
-      - DJANGO_DB_USERNAME=sampleuser
-      - DJANGO_DB_PASSWORD=samplesecret
-      - DJANGO_SECRET_KEY=dev_secret_key
+      - DJANGO_DB_PORT=3306
+      - DJANGO_DB_NAME=ecom
+      - DJANGO_DB_USERNAME=ymkim
+      - DJANGO_DB_PASSWORD=gluesys!!
+      - DJANGO_SECRET_KEY=5s-o54fcz87rly+c*e_z3jw614tye%3z*_2#0srga%j8)@i)3l
     ports:
       - "8000:8000"
     command: 
       - python manage.py runserver 0:8000
     volumes:
-      - ./:/app/
+      - .:/code
+    depends_on:
+      - mysql

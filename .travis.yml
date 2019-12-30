@@ -1,7 +1,7 @@
 language: python
 
 service:
-- mysql
+- docker
 
 python:
 - "3.7"
@@ -12,7 +12,7 @@ env:
 install:
 - pip install -r requirements.txt
 
-before_script:
+before_script: pip install docker-compose
 
 script:
-- pytest --cov=.
+  - docker-compose run --rm django sh -c "pytest"
