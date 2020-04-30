@@ -1,14 +1,18 @@
 language: python
-branches:
-  only:
-    - master
+
+service:
+- docker
+
 python:
-  - "3.7"
-services:
-	- mysql
-before_install:
-  - mysql -e 'CREATE DATABASE ecom'
+- "3.7"
+
+env:
+- DB=mysql
+
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
+
+before_script: pip install docker-compose
+
 script:
-  - python -m pytest
+  - docker-compose run --rm django sh -c "pytest"
